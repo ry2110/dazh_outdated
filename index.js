@@ -9,10 +9,22 @@ const OS = {
     user : "",
     note : {},
     variables : {},
+    r : "\\x1b[31m",
+    g : "\\x1b[32m",
+    b : "\\x1b[34m",
+    n : "\\x1b[0m",
     tokenize (uncatagorized) {
         return uncatagorized.split(" ")
     },
-
+    code () {
+        const input = prompt("! cod >")
+        if (input == "[exit]") {
+            this.note["code"] = input+"\n"
+            this.main()
+        } else {
+            this.code()
+        }
+    },
     main () {
         const syntaxes = prompt(" >")
         //console.log(syntaxes)
@@ -65,7 +77,12 @@ const OS = {
                     }
                 }
                 if (syntaxes[0] == "cre" && syntaxes[1]) {
-                    fs.writeFileSync(syntaxes[1],this.note["cur"])
+                    if (syntaxes[1] == this.note["cur"]) {
+                        fs.writeFileSync(syntaxes[1],this.note["cur"])
+                    }
+                    if (syntaxes[1] == this.note["code"]) {
+                        fs.writeFileSync(syntaxes[1],this.note["node"])
+                    }
                     console.log("File created")
                 }
                 if (syntaxes[0] == "dat"/* && syntaxes[1] && syntaxes[2] == "=" && syntaxes[3]*/) {
@@ -99,6 +116,20 @@ const OS = {
                 if (syntaxes[0] == "crd") {
                     console.log("Everything was made by Ry2110 :D")
                 }
+                if (syntaxes[0] == "cod") {
+                    OS.code()
+                }
+                /*if (syntaxes[0] == "fmk" && syntaxes[1] == "pxl" && syntaxes[2]) {
+                    if (syntaxes[2] == "r") {
+                        console.log(this.r+"#"+this.n)
+                    }
+                    if (syntaxes[2] == "g") {
+                        console.log(this.g+"#"+this.n)
+                    }
+                    if (syntaxes[2] == "b") {
+                        console.log(this.b+"#"+this.n)
+                    }
+                }*/
                 this.main()
             } else {
                 return
